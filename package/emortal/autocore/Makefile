@@ -16,7 +16,7 @@ define Package/autocore-arm
   MAINTAINER:=CN_SZTL
   DEPENDS:=@(arm||aarch64) \
     +TARGET_bcm27xx:bcm27xx-userland \
-    +TARGET_bcm53xx:nvram
+    +TARGET_bcm53xx:nvram \
     +ethtool
   VARIANT:=arm
 endef
@@ -44,7 +44,7 @@ define Package/autocore/install/Default
 endef
 
 define Package/autocore-arm/install
-	$(call Package/autocore/install/Default)
+	$(call Package/autocore/install/Default,$(1))
 
 ifneq (, $(findstring $(BOARD), ipq40xx ipq806x))
 	$(INSTALL_BIN) ./files/arm/tempinfo $(1)/sbin/
@@ -52,7 +52,7 @@ endif
 endef
 
 define Package/autocore-x86/install
-	$(call Package/autocore/install/Default)
+	$(call Package/autocore/install/Default,$(1))
 
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/x86/autocore $(1)/etc/init.d/
